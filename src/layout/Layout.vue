@@ -10,7 +10,7 @@
     <el-container>
       <el-header>
         <!-- Header content -->
-        header
+        <CustomHeader />
       </el-header>
       <CustomMain />
     </el-container>
@@ -18,8 +18,9 @@
 </template>
 
 <script setup>
-import CustomMenu from './components/CustomMenu.vue';
-import CustomMain from './components/CustomMain.vue';
+import CustomMenu from './components/CustomMenu.vue'
+import CustomMain from './components/CustomMain.vue'
+import CustomHeader from './components/CustomHeader.vue'
 </script>
 
 <style scoped lang="scss">
@@ -39,5 +40,9 @@ import CustomMain from './components/CustomMain.vue';
     width: auto;
     height: 100%;
   }
+}
+
+.el-header {
+  background: #ffffff;
 }
 </style>

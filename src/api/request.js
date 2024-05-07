@@ -6,7 +6,11 @@ const createAxiosInstance = () => {
   })
 
   axiosInstance.interceptors.request.use((config) => {
-    return config
+    const token = localStorage.getItem('token') || ''
+    return {
+      ...config,
+      headers: { token }
+    }
   }, (error) => {
     return Promise.reject(error)
   })
@@ -15,6 +19,9 @@ const createAxiosInstance = () => {
     const responseBody = response.data
     if (responseBody.code === '0000') {
       response.data = responseBody.data
+      if (response.data?.token) {
+        localStorage.setItem('token', response.data.token)
+      }
       return response
     } else {
       return Promise.reject(new Error(responseBody.message))

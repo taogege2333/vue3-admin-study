@@ -1,13 +1,23 @@
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export const useUserStore = defineStore('user', () => {
-  const userInfo = reactive({
-    name: 'Emotio',
-    auth: [1, 2, 3, 4]
-  })
+export const useUserStore = defineStore(
+  'user',
+  () => {
+    // const userInfo = ref({
+    //   name: 'Emotio',
+    //   auth: [1, 2, 3, 4]
+    // })
+    const userInfo = ref(null)
 
-  return {
-    userInfo
+    const setUserInfo = (info) => userInfo.value = info
+
+    return {
+      userInfo,
+      setUserInfo
+    }
+  },
+  {
+    persist: true
   }
-})
+)

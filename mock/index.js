@@ -52,5 +52,15 @@ export default [
         path: '/layout/test13',
       },
     ])
+  },
+  {
+    url: '/api/login',
+    method: 'post',
+    response: getResponse({
+      name: '小明',
+      auth: [1, 2, 3, 4],
+      avatar: 'http://localhost:5173/src/assets/images/logo.svg',
+      token: '@guid'
+    })
   }
 ]

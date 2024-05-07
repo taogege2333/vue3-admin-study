@@ -20,6 +20,11 @@ const router = createRouter({
       children: [],
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/MyLogin.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       component: () => import('@/views/404.vue')
     }
@@ -30,7 +35,14 @@ router.beforeEach(async (to, from, next) => {
   NProgress.start()
   const userStore = useUserStore()
   const routerStore = useRouterStore()
-  if (!routerStore.authRoutes) {
+
+  // 未登录
+  if (!userStore.userInfo && to.fullPath !== '/login') {
+    return next('/login')
+  }
+
+  // 已登陆，添加授权路由
+  if (!routerStore.authRoutes && userStore.userInfo) {
     await routerStore.setAuthRoutes(asyncRoutes, userStore.userInfo.auth)
     routerStore.authRoutes.forEach(route => router.addRoute('layout', route))
     return next(to.fullPath)
