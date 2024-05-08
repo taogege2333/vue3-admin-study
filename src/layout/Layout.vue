@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside :width="asideWidth">
       <!-- Aside content -->
       <h1 class="logo">
         <img src="../assets/images/logo.svg" alt="LOGO">
@@ -18,14 +18,25 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useGlobalStore } from '@/stores/global'
 import CustomMenu from './components/CustomMenu.vue'
 import CustomMain from './components/CustomMain.vue'
 import CustomHeader from './components/CustomHeader.vue'
+
+const globalStore = useGlobalStore()
+const { collapse } = storeToRefs(globalStore)
+const asideWidth = computed(() => {
+  return collapse.value ? '65px' : '200px'
+})
+
 </script>
 
 <style scoped lang="scss">
 .el-aside {
   background: var(--menu-bg-color);
+  transition: width 300ms ease;
 }
 
 .logo {

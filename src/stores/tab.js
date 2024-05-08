@@ -21,10 +21,7 @@ export const useTabStore = defineStore('tab', () => {
     }
   }
 
-  const setActivedTab = (name) => {
-    activedTab.value = name
-    console.log(activedTab.value)
-  }
+  const setActivedTab = (name) => activedTab.value = name
 
   const removeTab = (name) => {
     if (activedTab.value === name) {

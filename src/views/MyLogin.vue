@@ -25,12 +25,10 @@ import { login } from '@/api/login'
 const router = useRouter()
 const userStore = useUserStore()
 const formRef = ref(null)
-
 const form = reactive({
   username: 'admin',
   password: 'admin'
 })
-
 const rules = reactive({
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -58,6 +56,7 @@ const rules = reactive({
   ],
 })
 
+// 登录
 const handleClickSubmit = () => {
   formRef.value.validate((valid, field) => {
     if (valid) {

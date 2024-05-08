@@ -1,5 +1,9 @@
 <template>
   <div class="custom-header">
+    <div class="menu-control" @click="menuControl">
+      <el-icon v-show="collapse" size="20"><Expand /></el-icon>
+      <el-icon v-show="!collapse" size="20"><Fold /></el-icon>
+    </div>
     <div class="avatar">
       <el-avatar size="default" :src="userInfo.avatar" />
       <span class="name">{{ userInfo.name }}</span>
@@ -16,11 +20,21 @@
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/user'
+import { useGlobalStore } from '@/stores/global'
 
-const router = useRouter()
+// 用户信息
 const userStore = useUserStore()
 const { userInfo } = storeToRefs(userStore)
 
+// 侧边栏展开/收缩状态控制
+const globalStore = useGlobalStore()
+const { collapse } = storeToRefs(globalStore)
+const menuControl = () => {
+  globalStore.setCollapse(!collapse.value)
+}
+
+// 退出登录
+const router = useRouter()
 const handleClickLogout = () => {
   router.push('/login')
   localStorage.clear()
@@ -32,9 +46,11 @@ const handleClickLogout = () => {
 .custom-header {
   height: 60px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-
+  .menu-control {
+    cursor: pointer;
+  }
   .avatar {
     height: 60px;
     display: flex;
